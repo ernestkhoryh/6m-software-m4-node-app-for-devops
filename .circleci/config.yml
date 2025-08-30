@@ -37,9 +37,9 @@ jobs:
           docker-username: DOCKER_LOGIN  # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
           docker-password: DOCKER_PASSWORD  # DOCKER_PASSWORD is the default value
       - docker/build:
-          image: wongshennan/test_repository
+          image: $DOCKER_LOGIN/my-app
       - docker/push:
-          image: wongshennan/test_repository
+          image: $DOCKER_LOGIN/my-app
   deploy:
     docker:
       - image: cimg/node:16.10
