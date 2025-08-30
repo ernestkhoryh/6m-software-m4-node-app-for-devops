@@ -34,12 +34,12 @@ jobs:
           echo "Checking Docker username: $DOCKER_LOGIN"
           echo "Checking Docker password: $DOCKER_PASSWORD"
       - docker/check:
-          docker-username: DOCKER_LOGIN  # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
-          docker-password: DOCKER_PASSWORD  # DOCKER_PASSWORD is the default value
+          docker-username: $DOCKER_LOGIN  # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
+          docker-password: $DOCKER_PASSWORD  # DOCKER_PASSWORD is the default value
       - docker/build:
-          image: $DOCKER_LOGIN/my-app
+          image: $DOCKER_REPO/my-app
       - docker/push:
-          image: $DOCKER_LOGIN/my-app
+          image: $DOCKER_REPO/my-app
   deploy:
     docker:
       - image: cimg/node:16.10
