@@ -37,23 +37,23 @@ jobs:
           docker-username: DOCKER_LOGIN  # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
           docker-password: DOCKER_PASSWORD  # DOCKER_PASSWORD is the default value
       - docker/build:
-          image: $DOCKER_REPO/assig4.5my_app
+          image: $DOCKER_REPO/education-space
       - docker/push:
-          image: $DOCKER_REPO/assig4.5my_app
-  # deploy:
-  #   docker:
-  #     - image: cimg/node:16.10
-  #   steps:
-  #     - setup_remote_docker      
-  #     - heroku/install
-  #     - checkout
-  #     - run:
-  #         name: Heroku Container Push
-  #         command: | 
-  #             heroku container:login
-  #             heroku stack:set container -a shennan-su-devops
-  #             heroku container:push web -a shennan-su-devops
-  #             heroku container:release web -a shennan-su-devops
+          image: $DOCKER_REPO/education-space
+  deploy:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - setup_remote_docker      
+      - heroku/install
+      - checkout
+      - run:
+          name: Heroku Container Push
+          command: | 
+              heroku container:login
+              heroku stack:set container -a shennan-su-devops
+              heroku container:push web -a shennan-su-devops
+              heroku container:release web -a shennan-su-devops
 
 workflows:
   simple_workflow:
@@ -65,6 +65,6 @@ workflows:
       - publish:
           requires:
             - test
-      # - deploy:
-      #     requires:
-      #       - publish
+      - deploy:
+          requires:
+            - publish
