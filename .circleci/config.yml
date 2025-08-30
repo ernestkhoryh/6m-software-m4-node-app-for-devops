@@ -51,9 +51,9 @@ jobs:
           name: Heroku Container Push
           command: | 
               heroku container:login
-              heroku stack:set container -a shennan-su-devops
-              heroku container:push web -a shennan-su-devops
-              heroku container:release web -a shennan-su-devops
+              heroku stack:set container -a ernestkhor-su-devops
+              heroku container:push web -a ernestkhor-su-devops
+              heroku container:release web -a ernestkhor-su-devops
 
 workflows:
   simple_workflow:
