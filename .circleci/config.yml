@@ -1,4 +1,4 @@
-version: 2.1
+version: 2.1 # use CircleCI 2.1
 orbs:
   node: circleci/node@5.0.1
   docker: circleci/docker@2.1.4
@@ -34,8 +34,8 @@ jobs:
           echo "Checking Docker username: $DOCKER_LOGIN"
           echo "Checking Docker password: $DOCKER_PASSWORD"
       - docker/check:
-          docker-username: $DOCKER_LOGIN  # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
-          docker-password: $DOCKER_PASSWORD  # DOCKER_PASSWORD is the default value
+          docker-username: DOCKER_LOGIN  # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
+          docker-password: DOCKER_PASSWORD  # DOCKER_PASSWORD is the default value
       - docker/build:
           image: $DOCKER_REPO/my-app
       - docker/push:
