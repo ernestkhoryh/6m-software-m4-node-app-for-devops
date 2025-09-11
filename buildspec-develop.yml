@@ -1,0 +1,23 @@
+version: 0.2
+
+env:
+  variables:
+    AWS_DEFAULT_REGION: ap-southeast-1
+    AWS_ACCOUNT_ID: 573191169561
+    IMAGE_REPO_NAME: codepipelinestartertempla-codepipelineartifactsbuc-7cc87gtyvecg
+    IMAGE_TAG: latest
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+      # Add testing commands here (e.g., unit tests, linting)
+
+  # No post_build phase (no push to ECR or artifacts)
