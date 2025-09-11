@@ -16,6 +16,10 @@ phases:
       - unset CodePipeline_ErrorCode
       - unset CodePipeline_ErrorSummary
       - echo "Cleared pipeline error variables"
+      - export CodePipeline_ErrorCode=""
+      - export CodePipeline_ErrorSummary=""
+      - echo "Error variables cleared"
+
 
   pre_build:
     commands:
@@ -37,3 +41,9 @@ phases:
         }
 
   # No post_build phase (no push to ECR or artifacts)
+
+        # Clear error variables at the end too
+      - unset CodePipeline_ErrorCode
+      - unset CodePipeline_ErrorSummary
+      - export CodePipeline_ErrorCode=""
+      - export CodePipeline_ErrorSummary=""
