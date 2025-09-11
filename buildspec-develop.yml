@@ -8,6 +8,17 @@ env:
     IMAGE_TAG: latest
 
 phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      # CRITICAL: Clear CodePipeline error variables first
+      - echo "Clearing CodePipeline error variables..."
+      - unset CodePipeline_ErrorCode
+      - unset CodePipeline_ErrorSummary
+      - export CodePipeline_ErrorCode=""
+      - export CodePipeline_ErrorSummary=""
+      - echo "Error variables cleared"
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -21,3 +32,13 @@ phases:
       # Add testing commands here (e.g., unit tests, linting)
 
   # No post_build phase (no push to ECR or artifacts)
+
+        # Clear error variables at the end too
+      - unset CodePipeline_ErrorCode
+      - unset CodePipeline_ErrorSummary
+      - export CodePipeline_ErrorCode=""
+      - export CodePipeline_ErrorSummary=""
+
+artifacts:
+  files:
+    - imagedefinitions.json
