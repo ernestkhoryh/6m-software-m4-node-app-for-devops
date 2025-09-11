@@ -11,6 +11,11 @@ phases:
   install:
     runtime-versions:
       nodejs: 18
+    commands:
+      # Clear any previous pipeline error states
+      - unset CodePipeline_ErrorCode
+      - unset CodePipeline_ErrorSummary
+      - echo "Cleared pipeline error variables"
 
   pre_build:
     commands:
@@ -22,7 +27,13 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
-      # - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       # Add testing commands here (e.g., unit tests, linting)
+
+      - echo Running tests...
+      - npm test || {
+          echo "Tests failed. Exiting build.";
+          exit 1;
+        }
 
   # No post_build phase (no push to ECR or artifacts)
