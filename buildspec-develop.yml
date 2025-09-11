@@ -4,10 +4,14 @@ env:
   variables:
     AWS_DEFAULT_REGION: ap-southeast-1
     AWS_ACCOUNT_ID: 573191169561
-    IMAGE_REPO_NAME: codepipelinestartertempla-codepipelineartifactsbuc-7cc87gtyvecg
+    IMAGE_REPO_NAME: my-node-app
     IMAGE_TAG: latest
 
 phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -18,6 +22,7 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+      # - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       # Add testing commands here (e.g., unit tests, linting)
 
   # No post_build phase (no push to ECR or artifacts)
